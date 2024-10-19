@@ -11,6 +11,16 @@
 (function() {
     'use strict';
 
+    // Globale Fehlerbehandlung, um Fehlermeldungen zu unterdrücken
+    window.onerror = function(message, source, lineno, colno, error) {
+        // Unterdrücke nur spezifische Fehler wie "Cannot read properties of null"
+        if (message.includes("Cannot read properties of null")) {
+            return true;  // Fehler ignorieren und keine Fehlermeldung anzeigen
+        }
+        // Andere Fehler können normal behandelt werden (optional)
+        return false;  // Standard-Fehlerbehandlung durchführen
+    };
+
     const triggerKey = 'Alt+7';
 
     // Standardfelder für die Autofill-Funktion
