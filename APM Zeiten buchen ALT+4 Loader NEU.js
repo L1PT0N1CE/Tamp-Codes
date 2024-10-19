@@ -6,10 +6,12 @@
 // @author       kanataza
 // @match        https://eu1.eam.hxgnsmartcloud.com/*
 // @icon         https://media.licdn.com/dms/image/D4E03AQGYEWJAKzMoHg/profile-displayphoto-shrink_800_800/0/1675186919356?e=2147483647&v=beta&t=yD2lwHTC78Y0eFQGGpl173y2Rhv9LmZgCe6LKvLYFvI
+// @require      https://code.jquery.com/jquery-3.6.0.min.js
+// @require      https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
 // @grant        GM_addStyle
 // ==/UserScript==
 
-$(document).ready(function() {
+(function() {
     'use strict';
 
     // Define the default value for booactivity
@@ -26,19 +28,18 @@ $(document).ready(function() {
         const formattedDate = (day < 10 ? '0' : '') + day + "-" + month + "-" + year;
 
         const dateworkField = $("input[name='datework']");
-        console.log("Überprüfe dateworkField...");
-        console.log("dateworkField gefunden:", dateworkField);
-
         if (dateworkField.length > 0) {
             dateworkField.val(formattedDate);
             dateworkField.change(); // Trigger change event to notify UXDate of the change
-        } else {
-            console.warn("dateworkField nicht gefunden");
         }
     }
 
     // Function to create and display modal dialog
     function showModalDialog() {
+        const storedEmployee = localStorage.getItem('lastSelectedEmployee') || 'kanataza';
+        const storedHrswork = localStorage.getItem('lastSelectedHrswork') || '1';
+        const storedDatework = localStorage.getItem('lastSelectedDatework') || '';
+
         const modalContent = `
             <div id="modal-dialog" style="position: fixed; top: 50%; left: 20%; background-color: white; padding: 20px; border: 1px solid black; z-index: 9999;">
                 <h2>Select options</h2>
@@ -80,31 +81,104 @@ $(document).ready(function() {
             </div>
         `;
         $("body").append(modalContent);
+
+        // Make modal draggable
         $("#modal-dialog").draggable();
-        fillDatework();
 
+        // Fill booactivity field with default value
+        fillBooactivity(defaultBooactivity);
+
+        // Fill stored values
+        $('#employee-select').val(storedEmployee);
+        $('#hrswork-select').val(storedHrswork);
+        $('#datework').val(storedDatework);
+
+        // Set current date if storedDatework is empty
+        if (storedDatework === '') {
+            fillDatework();
+        }
+
+        // Handle click on submit button
         $("#submit-button").click(function() {
-            $("#modal-dialog").remove();
+            submitForm();
         });
 
+        // Handle click on close button
         $("#close-button").click(function() {
-            $("#modal-dialog").remove();
+            $("#modal-dialog").remove(); // Remove modal dialog on close
         });
 
+        // Handle click on booactivity 10 button
         $("#booactivity-10").click(function() {
-            $("input[name='booactivity']").val(defaultBooactivity);
+            fillBooactivity(defaultBooactivity);
         });
 
+        // Handle click on booactivity 11 button
         $("#booactivity-11").click(function() {
-            $("input[name='booactivity']").val(altBooactivity);
+            fillBooactivity(altBooactivity);
         });
     }
 
-    // Keydown event listener
+    // Function to fill the booactivity field
+    function fillBooactivity(value) {
+        const booactivityField = $("input[name='booactivity']");
+        if (booactivityField.length > 0) {
+            booactivityField.val(value);
+            booactivityField.focus(); // Focus on booactivity field
+            booactivityField.trigger($.Event("keydown", { keyCode: 13 })); // Simulate Enter key press
+        }
+    }
+
+    // Function to fill the fields
+    function fillFields(selectedEmployee, selectedHrswork, selectedOctype) {
+        const employeeField = $("input[name='employee']");
+        if (employeeField.length > 0) {
+            employeeField.val(selectedEmployee);
+        }
+
+        const hrsworkField = $("input[name='hrswork']");
+        if (hrsworkField.length > 0) {
+            hrsworkField.val(selectedHrswork);
+        }
+
+        const octypeField = $("input[name='octype']");
+        if (octypeField.length > 0) {
+            octypeField.val(selectedOctype);
+        }
+    }
+
+    // Function to submit the form
+    function submitForm() {
+        const selectedEmployee = $("#employee-select").val();
+        const selectedHrswork = $("#hrswork-select").val();
+        const selectedOctype = $("#octype-select").val();
+        fillFields(selectedEmployee, selectedHrswork, selectedOctype);
+        localStorage.setItem('lastSelectedEmployee', selectedEmployee);
+        localStorage.setItem('lastSelectedHrswork', selectedHrswork);
+        localStorage.setItem('lastSelectedOctype', selectedOctype);
+        $("#modal-dialog").remove(); // Remove modal dialog after submission
+    }
+
+    // Call showModalDialog function when Alt+4 is pressed
     $(document).keydown(function(event) {
         if (event.altKey && event.which === 52) { // Alt+4
-            showModalDialog();
-            console.log("Alt+4 gedrückt, Dialog angezeigt.");
+            // Check if modal dialog already exists
+            if ($("#modal-dialog").length === 0) {
+                showModalDialog();
+            }
+        }
+
+        // If Enter key is pressed and modal dialog is open, simulate form submission
+        if (event.which === 13 && $("#modal-dialog").length > 0) { // Enter key
+            submitForm(); // Simulate form submission
         }
     });
-});
+
+    // Call fillDatework function initially
+    fillDatework();
+
+    // Set interval to update the datework field daily
+    const interval = 24 * 60 * 60 * 1000; // 24 Stunden
+    setInterval(fillDatework, interval);
+
+})();
