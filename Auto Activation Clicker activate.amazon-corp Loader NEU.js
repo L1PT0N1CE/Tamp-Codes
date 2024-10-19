@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Auto Activation Clicker activate.amazon-corp Loader NEU
+// @name         Auto Activation Clicker activate.a***-*orp Loader NEU
 // @version      1.0
 // @description  Automatisches Klicken auf "From my own device" und "I have the device" nach Code-Eingabe
 // @author       @kanataza
