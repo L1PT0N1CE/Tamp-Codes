@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         APM ZUGEWIESEN alt+5 2x Loader Neu
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  Füllt Felder aus
 // @author       You
 // @match        https://eu1.eam.hxgnsmartcloud.com/*
@@ -42,10 +42,20 @@
         // Finde das Feld 'filtervalue'
         var filtervalueInput = document.querySelector('input[name="filtervalue"]');
         if (filtervalueInput) {
-            setTimeout(function() {
-                filtervalueInput.value = "KANATAZA";
+            // Wenn der Wert bereits gespeichert ist, setze ihn ein
+            var savedLogin = localStorage.getItem('filtervalueLogin');
+            if (savedLogin) {
+                filtervalueInput.value = savedLogin;
                 filtervalueInput.dispatchEvent(new Event('input', { bubbles: true }));
-            }, 100); // Ein kurzer Timeout
+            } else {
+                // Popup-Fenster für den Login anzeigen
+                var login = prompt("Bitte geben Sie den Login ein:");
+                if (login) {
+                    localStorage.setItem('filtervalueLogin', login);
+                    filtervalueInput.value = login;
+                    filtervalueInput.dispatchEvent(new Event('input', { bubbles: true }));
+                }
+            }
         }
     }
 
