@@ -11,7 +11,7 @@
 // @grant        GM_addStyle
 // ==/UserScript==
 
-(function() {
+$(document).ready(function() {
     'use strict';
 
     // Define the default value for booactivity
@@ -28,9 +28,14 @@
         const formattedDate = (day < 10 ? '0' : '') + day + "-" + month + "-" + year;
 
         const dateworkField = $("input[name='datework']");
+        console.log("Überprüfe dateworkField...");
+        console.log("dateworkField gefunden:", dateworkField);
+
         if (dateworkField.length > 0) {
             dateworkField.val(formattedDate);
             dateworkField.change(); // Trigger change event to notify UXDate of the change
+        } else {
+            console.warn("dateworkField nicht gefunden");
         }
     }
 
@@ -126,6 +131,8 @@
             booactivityField.val(value);
             booactivityField.focus(); // Focus on booactivity field
             booactivityField.trigger($.Event("keydown", { keyCode: 13 })); // Simulate Enter key press
+        } else {
+            console.warn("booactivityField nicht gefunden");
         }
     }
 
@@ -134,16 +141,22 @@
         const employeeField = $("input[name='employee']");
         if (employeeField.length > 0) {
             employeeField.val(selectedEmployee);
+        } else {
+            console.warn("employeeField nicht gefunden");
         }
 
         const hrsworkField = $("input[name='hrswork']");
         if (hrsworkField.length > 0) {
             hrsworkField.val(selectedHrswork);
+        } else {
+            console.warn("hrsworkField nicht gefunden");
         }
 
         const octypeField = $("input[name='octype']");
         if (octypeField.length > 0) {
             octypeField.val(selectedOctype);
+        } else {
+            console.warn("octypeField nicht gefunden");
         }
     }
 
@@ -180,5 +193,4 @@
     // Set interval to update the datework field daily
     const interval = 24 * 60 * 60 * 1000; // 24 Stunden
     setInterval(fillDatework, interval);
-
-})();
+});
