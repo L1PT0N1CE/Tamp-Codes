@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         APM auto-follow-up alt+7 Loader NEU
-// @version      0.2
+// @version      0.3
 // @description  Ausfüllen bei FWO Erstellung
 // @author       KANATAZA
 // @match        https://eu1.eam.hxgnsmartcloud.com/*
@@ -25,7 +25,7 @@
 
     // Funktion, um den Benutzernamen abzurufen oder abzufragen
     function getUsername() {
-        const usernameKey = 'apmUsername';
+        const usernameKey = 'apmUsername'; // Gemeinsamer Key für beide Skripte
         let assignedTo = localStorage.getItem(usernameKey);
 
         if (!assignedTo) {
