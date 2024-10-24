@@ -15,7 +15,7 @@
         "Alu",
         "[",
         "drive",
-        "scrub"
+        "scrubber"
       ];
 
   function filterTexts(input) {
