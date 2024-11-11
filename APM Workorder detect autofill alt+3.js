@@ -84,7 +84,7 @@
             failureCodeField.dispatchEvent(changeEvent);
             causeCodeField.value = "DIRTY";
             causeCodeField.dispatchEvent(changeEvent);
-        } else if(description.includes("drive") || description.includes("du") || description.includes("mismatch") || description.includes("ODS") || description.includes("bombed") || description.includes("bombe") || description.includes("bomben") || description.includes("firmware") || description.includes("bomb") || description.includes("bombs") || description.includes("wheel")) {
+        } else if(description.includes("drive") || description.includes("du") || description.includes("mismatch") || description.includes("restart") || description.includes("ausloggen") || description.includes("frozen") || description.includes("cognex") || description.includes("beamer") || description.includes("magenta") || description.includes("ODS") || description.includes("bombed") || description.includes("bombe") || description.includes("bomben") || description.includes("firmware") || description.includes("bomb") || description.includes("bombs") || description.includes("wheel")) {
             problemCodeField.value = "ROBOTICS";
             problemCodeField.dispatchEvent(changeEvent);
             failureCodeField.value = "DUCONT";
@@ -119,7 +119,7 @@
             failureCodeField.dispatchEvent(changeEvent);
             causeCodeField.value = "ALIGN";
             causeCodeField.dispatchEvent(changeEvent);
-        } else if(description.includes("depal") || description.includes("palletizer") || description.includes("rolle") || description.includes("roll") || description.includes("rolls") || description.includes("rollen") || description.includes("depalletizer")) {
+        } else if(description.includes("depal") || description.includes("palletizer") || description.includes("rolle") || description.includes("roll") || description.includes("outbound") || description.includes("conveyor") || description.includes("rolls") || description.includes("rollen") || description.includes("depalletizer")) {
             problemCodeField.value = "MECH";
             problemCodeField.dispatchEvent(changeEvent);
             failureCodeField.value = "ROLLER";
