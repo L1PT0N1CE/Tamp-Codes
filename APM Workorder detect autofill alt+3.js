@@ -84,7 +84,7 @@
             failureCodeField.dispatchEvent(changeEvent);
             causeCodeField.value = "DIRTY";
             causeCodeField.dispatchEvent(changeEvent);
-        } else if(description.includes("[CEL]") || description.includes("cel")) {
+        } else if(description.includes("CEL")) {
             problemCodeField.value = "ROBOTICS";
             problemCodeField.dispatchEvent(changeEvent);
             failureCodeField.value = "CRGHELEC";
