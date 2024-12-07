@@ -84,6 +84,13 @@
             failureCodeField.dispatchEvent(changeEvent);
             causeCodeField.value = "DIRTY";
             causeCodeField.dispatchEvent(changeEvent);
+        } else if(description.includes("[CEL]") || description.includes("cel")) {
+            problemCodeField.value = "ROBOTICS";
+            problemCodeField.dispatchEvent(changeEvent);
+            failureCodeField.value = "CRGHELEC";
+            failureCodeField.dispatchEvent(changeEvent);
+            causeCodeField.value = "DAMAGED";
+            causeCodeField.dispatchEvent(changeEvent);  
         } else if(description.includes("drive") || description.includes("du") || description.includes("mismatch") || description.includes("restart") || description.includes("ausloggen") || description.includes("frozen") || description.includes("cognex") || description.includes("beamer") || description.includes("magenta") || description.includes("ODS") || description.includes("bombed") || description.includes("bombe") || description.includes("bomben") || description.includes("firmware") || description.includes("bomb") || description.includes("bombs") || description.includes("wheel")) {
             problemCodeField.value = "ROBOTICS";
             problemCodeField.dispatchEvent(changeEvent);
@@ -105,13 +112,6 @@
             failureCodeField.dispatchEvent(changeEvent);
             causeCodeField.value = "JAM";
             causeCodeField.dispatchEvent(changeEvent);    
-        } else if(description.includes("[CEL]") || description.includes("cel")) {
-            problemCodeField.value = "ROBOTICS";
-            problemCodeField.dispatchEvent(changeEvent);
-            failureCodeField.value = "CRGHELEC";
-            failureCodeField.dispatchEvent(changeEvent);
-            causeCodeField.value = "DAMAGED";
-            causeCodeField.dispatchEvent(changeEvent);  
         } else if(description.includes("estop") || description.includes("e-stop") || description.includes("fault") || description.includes("faulted")) {
             problemCodeField.value = "ROBOTICS";
             problemCodeField.dispatchEvent(changeEvent);
