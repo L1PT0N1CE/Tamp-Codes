@@ -104,7 +104,14 @@
             failureCodeField.value = "BELT";
             failureCodeField.dispatchEvent(changeEvent);
             causeCodeField.value = "JAM";
-            causeCodeField.dispatchEvent(changeEvent);
+            causeCodeField.dispatchEvent(changeEvent);    
+        } else if(description.includes("[CEL]") || description.includes("cel")) {
+            problemCodeField.value = "ROBOTICS";
+            problemCodeField.dispatchEvent(changeEvent);
+            failureCodeField.value = "CRGHELEC";
+            failureCodeField.dispatchEvent(changeEvent);
+            causeCodeField.value = "DAMAGED";
+            causeCodeField.dispatchEvent(changeEvent);  
         } else if(description.includes("estop") || description.includes("e-stop") || description.includes("fault") || description.includes("faulted")) {
             problemCodeField.value = "ROBOTICS";
             problemCodeField.dispatchEvent(changeEvent);
