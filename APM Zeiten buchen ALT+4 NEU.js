@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         APM Zeiten buchen ALT+4 NEU
+// @name         APM Zeiten buchen ALT+4
 // @namespace    http://tampermonkey.net/
 // @version      0.4
 // @description  Zeiten buchen alt+4
@@ -14,8 +14,11 @@
 (function() {
     'use strict';
 
-    // Sicherstellen, dass jQuery verfügbar ist
-    const $ = jQuery.noConflict(true);
+    // Ensure jQuery is loaded and available
+    if (typeof jQuery === 'undefined') {
+        console.error('jQuery is not loaded!');
+        return; // Stop further execution
+    }
 
     const defaultBooactivity = "10 - RME Technician/Sr Technician";
     const altBooactivity = "11 - RME Technician/Sr Technician";
@@ -85,7 +88,9 @@
             </div>
         `;
         $("body").append(modalContent);
+
         $("#modal-dialog").draggable();
+
         fillBooactivity(defaultBooactivity);
 
         $('#employee-select').val(storedEmployee);
@@ -163,7 +168,7 @@
     });
 
     fillDatework();
+
     const interval = 24 * 60 * 60 * 1000;
     setInterval(fillDatework, interval);
-
 })();
